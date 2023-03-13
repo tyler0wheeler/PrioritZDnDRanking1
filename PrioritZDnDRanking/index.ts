@@ -5,6 +5,7 @@ import * as React from "react";
 export class PrioritZDnDRanking implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private context: ComponentFramework.Context<IInputs>;
     private items: ComponentFramework.PropertyTypes.DataSet;
+    
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
 
@@ -20,13 +21,10 @@ export class PrioritZDnDRanking implements ComponentFramework.ReactControl<IInpu
      * @param notifyOutputChanged A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
      * @param state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
      */
-    public init(
-        context: ComponentFramework.Context<IInputs>,
-        notifyOutputChanged: () => void,
-        state: ComponentFramework.Dictionary
-    ): void {
+    public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary): void {
         this.context = context;
         context.mode.trackContainerResize(true);
+
         this.notifyOutputChanged = notifyOutputChanged;
     }
 
@@ -35,22 +33,20 @@ export class PrioritZDnDRanking implements ComponentFramework.ReactControl<IInpu
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
      * @returns ReactElement root react element for the control
      */
-    public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const dataset = context.parameters.items;
-        return React.createElement(PriorityComponent, {
-            width: context.mode.allocatedWidth,
-            height: context.mode.allocatedHeight,
-            itemHeight: context.parameters.ItemHeight.raw,
-            fontSize: context.parameters.FontSize.raw,
-            fontColor: context.parameters.FontColor.raw,
-            dataset: dataset,
-            onReorder: this.onReorder,
-            backgroundColor: this.context.parameters.BackgroundColor.raw,
-            dragBackgroundColor:
-            this.context.parameters.DragBackgroundColor.raw,
-        } as PriorityComponentProps);
-     }
-
+public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
+    const dataset = context.parameters.items;
+    return React.createElement(PriorityComponent, {
+        width: context.mode.allocatedWidth,
+        height: context.mode.allocatedHeight,
+        itemHeight: context.parameters.ItemHeight.raw,
+        fontSize: context.parameters.FontSize.raw,
+        fontColor: context.parameters.FontColor.raw,
+        dataset: dataset,
+        onReorder: this.onReorder,
+        backgroundColor: this.context.parameters.BackgroundColor.raw,
+        dragBackgroundColor: this.context.parameters.DragBackgroundColor.raw,
+    } as PriorityComponentProps);
+}
     /**
      * It is called by the framework prior to a control receiving new data.
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
