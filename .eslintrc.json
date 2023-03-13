@@ -16,6 +16,7 @@
       "sourceType": "module"
     },
     "plugins": [
+      "@microsoft/power-apps",
       "@typescript-eslint"
     ],
     "rules": {
